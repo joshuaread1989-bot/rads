@@ -87,9 +87,9 @@ WHERE vr.radiator_code = 'HON037CM7K';
 The database is generated using AI-powered parsing that includes:
 
 ### Engine Code Recognition
-- **BMW codes**: 318i → 1.8L Petrol, 320d → 2.0L Diesel, 125i → 2.5L Petrol
+- **BMW codes**: 318i → 1.8L Petrol, 320d → 2.0L Diesel, 330i → 3.0L Petrol
 - **Mercedes codes**: C200 → 2.0L Petrol, C220 → 2.2L Diesel
-- Automatic size extraction from model codes
+- Automatic size extraction from model codes and descriptions
 
 ### Fuel Type Detection
 - **Diesel indicators**: TDI, CDI, HDI, DCI, "Turbo Diesel"
@@ -109,8 +109,8 @@ Enhanced: Model=E30, Engine Size=1.8L, Engine Type=Petrol (from 318i code)
 Original: "A3 8P 2.0ltr TDI Man. '08-"
 Enhanced: Chassis=8P, Engine Size=2.0L, Engine Type=Diesel (from TDI)
 
-Original: "E87/E88/E82 118d/120d Auto. '06-"
-Enhanced: Engine Size=2.0L, Engine Type=Diesel (from 118d code)
+Original: "A4 B8 1.8ltr TFSI Man. '08-"
+Enhanced: Chassis=B8, Engine Size=1.8L, Engine Type=Petrol Turbo (from TFSI)
 ```
 
 ## Data Source
