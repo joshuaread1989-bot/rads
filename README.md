@@ -21,6 +21,7 @@ Stores vehicle information with the following columns:
 - `year_to` - Ending year of production (INTEGER)
 - `engine` - Engine description (VARCHAR(200))
 - `engine_size` - Engine size (VARCHAR(50))
+- `engine_type` - Engine fuel type: Diesel, Petrol, or Petrol Turbo (VARCHAR(50))
 - `trans` - Transmission type (Auto/Man) (VARCHAR(50))
 
 ### 2. `radiators` Table
@@ -38,6 +39,11 @@ Links vehicles to compatible radiators:
 - Total vehicles: 2,070
 - Total unique radiators: 1,433
 - Total vehicle-radiator links: 2,070
+- Vehicles with engine type classification: 510 (24.6%)
+  - Diesel: 281
+  - Petrol: 115
+  - Petrol Turbo: 114
+- Vehicles with engine size data: 1,117 (54%)
 
 ## Example Data
 
@@ -76,6 +82,37 @@ JOIN vehicle_radiators vr ON v.id = vr.vehicle_id
 WHERE vr.radiator_code = 'HON037CM7K';
 ```
 
+## AI-Enhanced Data Extraction
+
+The database is generated using AI-powered parsing that includes:
+
+### Engine Code Recognition
+- **BMW codes**: 318i → 1.8L Petrol, 320d → 2.0L Diesel, 125i → 2.5L Petrol
+- **Mercedes codes**: C200 → 2.0L Petrol, C220 → 2.2L Diesel
+- Automatic size extraction from model codes
+
+### Fuel Type Detection
+- **Diesel indicators**: TDI, CDI, HDI, DCI, "Turbo Diesel"
+- **Turbo indicators**: TFSI, TSI, FSI, "Turbo"
+- **Petrol indicators**: Default for non-diesel engines
+
+### Chassis Code Validation
+- **BMW**: E30, E36, E46, E90/E91/E92, E87/E88/E82 (1 & 3 Series)
+- **Audi**: B5/B6/B7/B8 (A4), C4/C5/C6 (A6), 8P (A3), 8T (A5)
+- Intelligent chassis code detection from model descriptions
+
+### Example AI Enhancements
+```
+Original: "E30 318i Man. '83-87"
+Enhanced: Model=E30, Engine Size=1.8L, Engine Type=Petrol (from 318i code)
+
+Original: "A3 8P 2.0ltr TDI Man. '08-"
+Enhanced: Chassis=8P, Engine Size=2.0L, Engine Type=Diesel (from TDI)
+
+Original: "E87/E88/E82 118d/120d Auto. '06-"
+Enhanced: Engine Size=2.0L, Engine Type=Diesel (from 118d code)
+```
+
 ## Data Source
 
-Data extracted from AdRad automotive radiator catalog (adrad_text.txt).
+Data extracted from AdRad automotive radiator catalog (adrad_text.txt) with AI-enhanced parsing.
